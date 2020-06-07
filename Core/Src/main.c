@@ -103,19 +103,20 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
+  MX_RTC_Init();
   MX_USART1_UART_Init();
   MX_I2C1_Init();
-  MX_ADC_Init();
   MX_IWDG_Init();
-  MX_RTC_Init();
-  MX_USART3_UART_Init();
   MX_DAC_Init();
-  MX_TIM6_Init();
+  MX_ADC_Init();
   MX_SPI2_Init();
+  MX_TIM6_Init();
+  MX_USART3_UART_Init();
+  MX_USART2_UART_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
+  /* USER CODE END 2 *?n/
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

@@ -79,7 +79,7 @@ void MX_ADC_Init(void)
 
     /**Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time. 
     */
-  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Channel = ADC_CHANNEL_6;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_48CYCLES;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
@@ -113,7 +113,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   
     /**ADC GPIO Configuration    
     PA1     ------> ADC_IN1
-    PA2     ------> ADC_IN2 
+    PA6     ------> ADC_IN6 
     */
     GPIO_InitStruct.Pin = BAT_ADC_Pin|ADC_IF_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -159,7 +159,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
   
     /**ADC GPIO Configuration    
     PA1     ------> ADC_IN1
-    PA2     ------> ADC_IN2 
+    PA6     ------> ADC_IN6 
     */
     HAL_GPIO_DeInit(GPIOA, BAT_ADC_Pin|ADC_IF_Pin);
 
