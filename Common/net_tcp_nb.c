@@ -48,7 +48,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "net_internal.h"
-#include "nb_iot.h"
+#include "nb_io.h"
 #include <string.h>
 
 #ifdef USE_NB

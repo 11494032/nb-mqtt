@@ -327,22 +327,22 @@ int deviceStatusPub(void)
   MQTT_msg.payload = payload_buf;
   
   //TODO:prepare pub payload,@sz
-  payload_buf[0]= GetTemperatureValue();
-  payload_buf[1]= GetHumValue(); 
-  payload_buf[2]= GetTempratureThreshold();
+ // payload_buf[0]= GetTemperatureValue();
+ // payload_buf[1]= GetHumValue(); 
+ // payload_buf[2]= GetTempratureThreshold();
   MQTT_msg.payloadlen = 3;
   
 
   if((ret=MQTTPublish(&Client, temp_hum_topic,&MQTT_msg)) != 0)
   {
     msg_error("Failed to publish data. %d ",ret);
-    msg_info(": temprature = %d, humidity = %d\n\n",GetTemperatureValue(),GetHumValue());
+   // msg_info(": temprature = %d, humidity = %d\n\n",GetTemperatureValue(),GetHumValue());
   }
   else
   {
 
     msg_info("publish device status successfully ");
-    msg_info(": temprature = %d, humidity = %d\n\n",GetTemperatureValue(),GetHumValue());
+    msg_info(": temprature = data, humidity = ===========================\n\n",);
   }
   return ret;
 }

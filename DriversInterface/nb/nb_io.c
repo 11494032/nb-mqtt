@@ -60,5 +60,5 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *UartHandle)
 
 int32_t NB_IO_Receive(uint8_t* Buffer, uint32_t Length)
 {
-  return kfifo_out(&NB.io_fifo, Buffer, Length);
+//  return kfifo_out(&NB.io_fifo, Buffer, Length);
 }

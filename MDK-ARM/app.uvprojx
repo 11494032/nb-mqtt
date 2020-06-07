@@ -316,7 +316,7 @@
             <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L151xBA,USE_NB</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;        ../Drivers/STM32L1xx_HAL_Driver/Inc;        ../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32L1xx/Include;        ../Drivers/CMSIS/Include;../Src;../Ali;../Common;../DriversInterface/nb</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc;../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L1xx/Include;../Drivers/CMSIS/Include;../Src;../Ali;../Common;../DriversInterface/nb;../Third_Party/mbedtls-2.16.0/library;../Third_Party/mbedtls-2.16.0/include/;../Third_Party/paho.mqtt.embedded-c-1.1.0/MQTTClient-C/src;../Third_Party/paho.mqtt.embedded-c-1.1.0/MQTTPacket/src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -732,6 +732,121 @@
               <FileName>app.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Src\app.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbedtls</GroupName>
+          <Files>
+            <File>
+              <FileName>md.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\library\md.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\library\md_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\library\platform_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\library\sha1.c</FilePath>
+            </File>
+            <File>
+              <FileName>md.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\include\mbedtls\md.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Third_Party\mbedtls-2.16.0\include\mbedtls\platform_util.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mqttClient</GroupName>
+          <Files>
+            <File>
+              <FileName>MQTTClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTClient-C\src\MQTTClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTClient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTClient-C\src\MQTTClient.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mqttPacket</GroupName>
+          <Files>
+            <File>
+              <FileName>MQTTConnectClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTConnectClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTConnectServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTConnectServer.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTDeserializePublish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTDeserializePublish.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTFormat.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTFormat.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTFormat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTFormat.h</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTPacket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTPacket.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTPacket.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTPacket.h</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSerializePublish.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTSerializePublish.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSubscribeClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTSubscribeClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTSubscribeServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTSubscribeServer.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTUnsubscribeClient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTUnsubscribeClient.c</FilePath>
+            </File>
+            <File>
+              <FileName>MQTTUnsubscribeServer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Third_Party\paho.mqtt.embedded-c-1.1.0\MQTTPacket\src\MQTTUnsubscribeServer.c</FilePath>
             </File>
           </Files>
         </Group>

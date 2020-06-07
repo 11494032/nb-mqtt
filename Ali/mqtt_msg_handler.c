@@ -41,13 +41,6 @@ void Service_message_handler(MessageData * data)
   msg_info((char*)message->payload);  
   msg_info("\r\n"); 
   
-  //set flag to stop sending alarm message
-  if(GetTemperatureStatus()==TEMPERATURE_HIGH_ALARM)
-  {
-    SetTemperatureStatus(TEMPERATURE_HIGH_ALARMSTOP);
-    //start blinking red LED
-    StartAlarmLedBlinking();
-  }
   msg_info("\n receive ClearAlarm message\n");
 
 }
