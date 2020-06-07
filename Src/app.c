@@ -21,7 +21,7 @@ Timer   regular_pub_timer;
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
+int app(void)
 {
   
   int ret;
@@ -101,7 +101,7 @@ int initPlatform(void)
   net_ipaddr_t ipAddr;
   bool skip_reconf = false;
   
-  if (net_init(&hnet, NET_IF, (net_if_init)) != NET_OK)
+  //if (net_init(&hnet, NET_IF, (net_if_init)) != NET_OK)
   {
     //CLOUD_Error_Handler(CLOUD_DEMO_IP_ADDRESS_ERROR);
     return -1;
