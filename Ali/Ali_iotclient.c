@@ -9,6 +9,7 @@ This file implement the Ali IoT Client Activities
 #include "MQTTClient.h"
 #include "iot_flash_config.h"
 #include "mbedtls/md.h"
+#include "app.h"
 
 //MQTT configue
 #define MQTT_3_1_1                      4
@@ -73,22 +74,9 @@ int get_mqtt_server_addr(char* host_addr, char* region_id, char* product_key )
 int build_mqtt_topic(void)
 {
   uint32_t return_len=0;
-  char* product_key_temp;
-  char* device_name_temp;
-  
-  if(getProductKey(&product_key_temp)==HAL_ERROR)
-  {
-    msg_info("getProductKey failed\n");
-    return -1;
-  }
-  if(getDeviceName(&device_name_temp)==HAL_ERROR)
-  {
-    msg_info("getDeviceName failed\n");
-    return -1;
-  }
-  
+
   memset(tempAlarm_topic,0,sizeof(tempAlarm_topic));
-  return_len = snprintf(tempAlarm_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempAlarm",product_key_temp,device_name_temp);  
+  return_len = snprintf(tempAlarm_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempAlarm",product_key,device_name);  
   if(return_len >= MQTT_CLIENT_INFO_SIZE)
   {
     msg_info("no enough space for tempAlarm_topic\n");
@@ -96,7 +84,7 @@ int build_mqtt_topic(void)
   }
   
   memset(clearAlarm_topic,0,sizeof(clearAlarm_topic));
-  return_len = snprintf(clearAlarm_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/clearAlarm",product_key_temp,device_name_temp);  
+  return_len = snprintf(clearAlarm_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/clearAlarm",product_key,device_name);  
   if(return_len >= MQTT_CLIENT_INFO_SIZE)
   {
     msg_info("no enough space for clearAlarm_topic\n");
@@ -104,7 +92,7 @@ int build_mqtt_topic(void)
   }
   
   memset(threshold_topic,0,sizeof(threshold_topic));
-  return_len = snprintf(threshold_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempThresholdSet",product_key_temp,device_name_temp);  
+  return_len = snprintf(threshold_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempThresholdSet",product_key,device_name);  
   if(return_len >= MQTT_CLIENT_INFO_SIZE)
   {
     msg_info("no enough space for threshold_topic\n");
@@ -112,7 +100,7 @@ int build_mqtt_topic(void)
   }
   
   memset(temp_hum_topic,0,sizeof(temp_hum_topic));
-  return_len = snprintf(temp_hum_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempHumUpload",product_key_temp,device_name_temp);  
+  return_len = snprintf(temp_hum_topic,MQTT_CLIENT_INFO_SIZE,"/%s/%s/user/tempHumUpload",product_key,device_name);  
   if(return_len >= MQTT_CLIENT_INFO_SIZE)
   {
     msg_info("no enough space for temp_hum_topic\n");
@@ -158,7 +146,6 @@ int get_mqtt_password(char* password,char* product_key, char* device_name, uint3
   char content[256];
   char digest[20];
   char sig_hmac[44]= {'\0'};
-  char * tempsecret;
   int32_t password_len;
   uint32_t return_len=0;
   uint32_t i=0;
@@ -172,16 +159,12 @@ int get_mqtt_password(char* password,char* product_key, char* device_name, uint3
     msg_info("no enough space for content\n");
     return -1;
   }
-  if(getDeviceSecret(&tempsecret)==HAL_ERROR)
-  {
-    msg_info("getDeviceSecret failed\n");
-    return -1;
-  }  
+
   msg_info("content:%s\n",content);
-  msg_info("key: %s\n",tempsecret);
+  msg_info("key: %s\n",device_secret);
   //HMAC SHA1
   //transform to HEX string
-  Mbedtls_SHA1_HMAC_Compute((uint8_t*)content,strlen(content),(uint8_t*)tempsecret,strlen(tempsecret),(uint8_t*)digest,&password_len);
+  Mbedtls_SHA1_HMAC_Compute((uint8_t*)content,strlen(content),(uint8_t*)device_secret,strlen(device_secret),(uint8_t*)digest,&password_len);
   for(i=0;i<20;i++)
     sprintf(&sig_hmac[i*2],"%02x",(unsigned int)digest[i]);
 
@@ -195,23 +178,8 @@ int connect2Aliiothub(void)
 {
   int ret;
   uint8_t connectCounter = 0;
-  char * tempRegionIdString;
-  char * tempProductKeyString;
   
-  /*get host address*/
-  ret = getRegionId(&tempRegionIdString);
-  if(ret==HAL_ERROR)
-  {
-    msg_info("getRegionId failed\n");
-    return -1;
-  }
-    
-  if(getProductKey(&tempProductKeyString)==HAL_ERROR)
-  {
-    msg_info("getProductKey failed\n");
-    return -1;
-  }
-  if(get_mqtt_server_addr(mqtt_host_address,tempRegionIdString,tempProductKeyString)== -1)
+  if(get_mqtt_server_addr(mqtt_host_address,RegionId,product_key)== -1)
   {
     msg_info("get_mqtt_server_addr failed\n");
     return -1;    
@@ -253,8 +221,7 @@ int connect2MQTTServer(void)
 {
   int ret;
   uint8_t count=0;
-  net_macaddr_t mac_adr;
-  uint8_t clientid[16];
+  uint8_t clientid[16] ="AZ000100010010";
   uint32_t timestamp;
   char* device_name_temp;
   char* product_key_temp;
@@ -264,32 +231,7 @@ int connect2MQTTServer(void)
   ret = 0;
   MQTTClientInit(&Client,&sNetwork,COMMAND_TIMEOUT_MS,MQTT_write_buf,sizeof(MQTT_write_buf),MQTT_read_buf,sizeof(MQTT_read_buf));
   
-  if(getProductKey(&product_key_temp)==HAL_ERROR)
-  {
-    msg_info("getProductKey failed\n");
-    return -1;
-  }
-  if(getDeviceName(&device_name_temp)==HAL_ERROR)
-  {
-    msg_info("getDeviceName failed\n");
-    return -1;
-  }
-#ifndef USE_NB
-  if(net_get_mac_address(hnet,&mac_adr)!=NET_OK)
-  {
-    msg_info("net_get_mac_address failed\n");
-    return -1;
-  }
-  memset(clientid,0,sizeof(clientid));
-  sprintf(clientid,"%x%x%x%x%x%x",mac_adr.mac[0],mac_adr.mac[1],mac_adr.mac[2],mac_adr.mac[3],mac_adr.mac[4],mac_adr.mac[5]);
-#else
-  memset(clientid,0,sizeof(clientid));
-  if(net_get_imei(&clientid)!=NET_OK)
-  {
-    msg_info("net_get_imei failed\n");
-    return -1;
-  }
-#endif
+ 
   timestamp = HAL_GetTick();
   get_mqtt_client_id(mqtt_client_id,clientid,timestamp);
   get_mqtt_username(mqtt_client_username,device_name_temp, product_key_temp);

@@ -12,6 +12,11 @@
 
 void initApplication(void);
 int initPlatform(void);
+char *product_key       = "a13FN5TplKq";
+char *product_secret    = "y7GSILD480lBSsP8";
+char *device_name       = "dynreg_basic_demo";
+char *device_secret			= "ssssssssssss";
+char *RegionId				  = "";
 
 int net_if_init(void * if_ctxt);
 
@@ -34,8 +39,6 @@ int app(void)
   msg_info("***              FW version %d.%d.%d - %s, %s              ***\n", 
            FW_VERSION_MAJOR, FW_VERSION_MINOR, FW_VERSION_PATCH, __DATE__, __TIME__);
   msg_info("**************************************************************************\n");
-  
-  initApplication();
   
   //WIFI SSID/passowrd config and initialization
   //and config device certificate
@@ -84,67 +87,15 @@ int app(void)
 
 
 
-/* USER CODE BEGIN 4 */
-void initApplication(void)
-{
-
-  msg_info("\nApplication parameter init.\n");
-  //init regulatar publish timer and alarm publish timer
-  //and start regular publish timer
-  TimerInit(&regular_pub_timer);
- // TimerInit(&alarm_pub_timer);
- // TimerCountdownMS(&regular_pub_timer,REGULAR_TIMER_INTERVAL);
-}
 
 int initPlatform(void)
 {
-  net_ipaddr_t ipAddr;
-  bool skip_reconf = false;
-  
-  //if (net_init(&hnet, NET_IF, (net_if_init)) != NET_OK)
+  if (net_init(&hnet, NET_IF, (net_if_init)) != NET_OK)
   {
     //CLOUD_Error_Handler(CLOUD_DEMO_IP_ADDRESS_ERROR);
     return -1;
   }
-  
-    /* Slight delay since the module seems to take some time prior to being able
-   to retrieve its IP address after a connection. */
-  HAL_Delay(500);
-#ifndef USE_NB
-  msg_info("Retrieving the IP address.\n");
-  
-  if (net_get_ip_address(hnet, &ipAddr) != NET_OK)
-  {
-    //CLOUD_Error_Handler(CLOUD_DEMO_IP_ADDRESS_ERROR);
-    return -1;
-  }
-  else
-  {
-    switch(ipAddr.ipv)
-    {
-      case NET_IP_V4:
-        msg_info("IP address: %d.%d.%d.%d\n", ipAddr.ip[12], ipAddr.ip[13], ipAddr.ip[14], ipAddr.ip[15]);
-        break;
-      case NET_IP_V6:
-      default:
-        //CLOUD_Error_Handler(CLOUD_DEMO_IP_ADDRESS_ERROR);
-        return -1;
-    }
-  }
-  #endif
-  /*
-  skip_reconf = (0==checkDeviceConfig())? 1:0;
-  if( skip_reconf ==  true)
-  {
-     printf("Push the User button (Blue) within the next 5 seconds if you want to update "
-           "the device security parameters or credentials.\n\n");
-    skip_reconf = (Button_WaitForPush(5000) == BP_NOT_PUSHED);
-  }
-  if( skip_reconf ==  false)
-  {
-     updateDeviceConfig();
-  }
-*/
+
   build_mqtt_topic();
   return 0;
 }

@@ -3,6 +3,7 @@
 
 #include "net.h"
 #include "paho_mqtt_platform.h"
+#include "app.h"
 
 extern int mqtt_connect_network(Network* n, const char * host_address, int port);
 extern int mqtt_socket_send(Network *network, unsigned char *buf, int len, int timeout);

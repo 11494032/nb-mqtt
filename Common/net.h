@@ -50,6 +50,7 @@
 #define __NET_H__
 
 #include <stdint.h>
+#include <stdio.h>
 
 /** Function return codes. */
 #define  NET_OK          0   /**< Success */

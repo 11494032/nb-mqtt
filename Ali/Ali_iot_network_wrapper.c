@@ -1,4 +1,3 @@
-#include "app.h"
 #include "Ali_iot_network_wrapper.h"
 
 

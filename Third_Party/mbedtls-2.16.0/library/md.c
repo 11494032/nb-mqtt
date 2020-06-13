@@ -137,6 +137,11 @@ const mbedtls_md_info_t *mbedtls_md_info_from_type( mbedtls_md_type_t md_type )
 {
     switch( md_type )
     {
+#if defined(MBEDTLS_SHA1_C)
+        case MBEDTLS_MD_SHA1:
+            return( &mbedtls_sha1_info );
+#endif
+			/*
 #if defined(MBEDTLS_MD2_C)
         case MBEDTLS_MD_MD2:
             return( &mbedtls_md2_info );
@@ -169,6 +174,7 @@ const mbedtls_md_info_t *mbedtls_md_info_from_type( mbedtls_md_type_t md_type )
         case MBEDTLS_MD_SHA512:
             return( &mbedtls_sha512_info );
 #endif
+*/
         default:
             return( NULL );
     }

@@ -52,60 +52,13 @@
  extern "C" {
 #endif
 
-#define USER_CONF_WIFI_SSID_MAX_LENGTH  32
-#define USER_CONF_WIFI_PSK_MAX_LENGTH   64  
-#define USER_CONF_DEVICE_NAME_LENGTH    32
-#define USER_CONF_DEVICE_SECRET_LENGTH  128
-#define USER_CONF_PRODUCT_KEY_LENGTH    32
-#define USER_CONF_REGION_ID_LENGTH    32
-#define USER_CONF_MAGIC                 0x0123456789ABCDEFuLL
 
-
-   
-typedef struct {
-  uint64_t magic;                             /**< The USER_CONF_MAGIC magic word signals that the structure was once written to FLASH. */
-  char ssid[USER_CONF_WIFI_SSID_MAX_LENGTH];  /**< Wifi network SSID. */
-  char psk[USER_CONF_WIFI_PSK_MAX_LENGTH];    /**< Wifi network PSK. */
-  uint8_t security_mode;                      /**< Wifi network security mode. See @ref wifi_network_security_t definition. */
-} wifi_config_t;
-
-typedef struct {
-  uint64_t magic;                             /**< The USER_CONF_MAGIC magic word signals that the structure was once written to FLASH. */
-  char product_key[USER_CONF_PRODUCT_KEY_LENGTH];
-  char device_name[USER_CONF_DEVICE_NAME_LENGTH];
-  char device_secret[USER_CONF_DEVICE_SECRET_LENGTH];
-  char region_id[USER_CONF_REGION_ID_LENGTH];
-} iot_config_t;
- 
-typedef struct {
-  uint64_t magic;                             /**< The USER_CONF_MAGIC magic word signals that the structure was once written to FLASH. */
-  int8_t temprature_threshold; 
-}app_config_t;
-/** Static user configuration data which must survive reboot and firmware update. */
-typedef struct {
-  wifi_config_t wifi_config;
-  iot_config_t iot_config;
-  app_config_t app_config;
-} user_config_t;
-
-
-   
-int checkWiFiCredentials(const char ** const ssid, const char ** const psk, uint8_t * const security_mode);
-int updateWiFiCredentials(const char ** const ssid, const char ** const psk, uint8_t * const security_mode);
 int updateTLSKeys(void);
 int getTLSKeys(const char ** const ca_cert, const char ** const device_cert, const char ** const private_key);
 int checkTLSCredentials(void);
 int updateDeviceConfig(void);
 int getServerAddress(const char ** const address);
-int getDeviceName(const char ** const name);
 int checkDeviceConfig(void);
-int getRegionId(const char ** const address);
-int getProductKey(const char ** const address);
-int getDeviceName(const char ** const name);
-int getDeviceSecret(const char ** const name);
-int updateTempThreshold(int8_t value);
-int getTempThresholdInFlash(int8_t * threshold_p);
-
 
 #ifdef __cplusplus
 }
